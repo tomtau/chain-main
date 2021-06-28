@@ -9,6 +9,7 @@ import (
 	"time"
 
 	conf "github.com/cosmos/cosmos-sdk/client/config"
+
 	"github.com/imdario/mergo"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
@@ -28,7 +29,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/snapshots"
 	"github.com/cosmos/cosmos-sdk/store"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	authclient "github.com/cosmos/cosmos-sdk/x/auth/client"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -47,7 +47,7 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 	config.SetConfig()
 	encodingConfig := app.MakeEncodingConfig()
 	initClientCtx := client.Context{}.
-		WithJSONMarshaler(encodingConfig.Marshaler).
+		WithJSONCodec(encodingConfig.Marshaler).
 		WithInterfaceRegistry(encodingConfig.InterfaceRegistry).
 		WithTxConfig(encodingConfig.TxConfig).
 		WithLegacyAmino(encodingConfig.Amino).
@@ -84,7 +84,7 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 }
 
 func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
-	authclient.Codec = encodingConfig.Marshaler
+	// authclient.Codec = encodingConfig.Marshaler
 
 	initCmd := genutilcli.InitCmd(app.ModuleBasics, app.DefaultNodeHome)
 	initCmd.PreRun = func(cmd *cobra.Command, args []string) {
@@ -112,6 +112,8 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
 				"bank": map[string]interface{}{
 					"denom_metadata": []interface{}{
 						map[string]interface{}{
+							"name":        "Crypto.org Chain",
+							"symbol":      "CRO",
 							"description": "The native token of Crypto.org Chain.",
 							"denom_units": []interface{}{
 								map[string]interface{}{
@@ -196,6 +198,9 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
 		txCommand(),
 		keys.Commands(app.DefaultNodeHome),
 	)
+
+	// add rosetta
+	rootCmd.AddCommand(server.RosettaCommand(encodingConfig.InterfaceRegistry, encodingConfig.Marshaler))
 }
 
 func addModuleInitFlags(startCmd *cobra.Command) {

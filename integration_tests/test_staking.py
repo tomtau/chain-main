@@ -11,6 +11,7 @@ from .utils import (
     parse_events,
     wait_for_block,
     wait_for_block_time,
+    wait_for_new_blocks,
     wait_for_port,
 )
 
@@ -130,6 +131,9 @@ def test_join_validator(cluster):
     count1 = len(cluster.validators())
 
     # wait for the new node to sync
+    wait_for_block(cluster.cosmos_cli(i), cluster.block_height())
+
+    # wait for the new node to sync
     wait_for_block(cluster.cosmos_cli(i), cluster.block_height(0))
     # create validator tx
     assert cluster.create_validator("1cro", i)["code"] == 0
@@ -181,8 +185,11 @@ def test_min_self_delegation(cluster):
         find_validator()["status"] == "BOND_STATUS_BONDED"
     ), "validator set not changed yet"
 
-    rsp = cluster.unbond_amount(oper_addr, "1basecro", acct_addr, i=2)
-    assert rsp["code"] == 0, rsp["raw_log"]
+    # can't do commit broadcast here
+    rsp = cluster.unbond_amount(
+        oper_addr, "1basecro", acct_addr, i=2, broadcast_mode="async"
+    )
+    wait_for_new_blocks(cluster, 2)
     assert (
         find_validator()["status"] == "BOND_STATUS_UNBONDING"
     ), "validator get removed"
