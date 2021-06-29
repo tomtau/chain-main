@@ -53,7 +53,7 @@ def test_transfer(cluster):
                 },
                 {
                     "attributes": [
-                        {"key": "action", "value": "/cosmos.bank.v1beta1.Msg/Send"},
+                        {"key": "action", "value": "/cosmos.bank.v1beta1.MsgSend"},
                         {"key": "sender", "value": community_addr},
                         {"key": "module", "value": "bank"},
                     ],

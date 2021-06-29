@@ -154,7 +154,7 @@ def test_join_validator(cluster):
         "max_change_rate": "0.010000000000000000",
     }
     assert (
-        cluster.edit_validator(i, commission_rate="0.2")["code"] == 13
+        cluster.edit_validator(i, commission_rate="0.2")["code"] == 12
     ), "commission cannot be changed more than once in 24h"
     assert cluster.edit_validator(i, moniker="awesome node")["code"] == 0
     assert cluster.validator(val_addr)["description"]["moniker"] == "awesome node"
@@ -187,7 +187,7 @@ def test_min_self_delegation(cluster):
 
     # can't do commit broadcast here
     rsp = cluster.unbond_amount(
-        oper_addr, "1basecro", acct_addr, i=2, broadcast_mode="async"
+        oper_addr, "1basecro", acct_addr, i=2 #, broadcast_mode="async"
     )
     wait_for_new_blocks(cluster, 2)
     assert (
