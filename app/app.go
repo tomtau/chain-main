@@ -65,6 +65,7 @@ import (
 	ibchost "github.com/cosmos/ibc-go/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/modules/core/keeper"
 
+	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	"github.com/cosmos/cosmos-sdk/x/mint"
 	mintkeeper "github.com/cosmos/cosmos-sdk/x/mint/keeper"
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
@@ -454,26 +455,48 @@ func New(
 	app.SetEndBlocker(app.EndBlocker)
 
 	// FIXME: upgrade plan to v0.43 https://github.com/cosmos/cosmos-sdk/pull/9567/files
-	// planName := "v2.0.0"
-	// app.UpgradeKeeper.SetUpgradeHandler(planName, func(ctx sdk.Context, _ upgradetypes.Plan) {
-	// 	// https://github.com/crypto-org-chain/chain-main/blob/master/doc/architecture/adr-003.md
-	// })
+	planName := "v3.0.0"
+	app.UpgradeKeeper.SetUpgradeHandler(planName, func(ctx sdk.Context, plan upgradetypes.Plan, _ module.VersionMap) (module.VersionMap, error) {
+		// 1st-time running in-store migrations, using 1 as fromVersion to
+		// avoid running InitGenesis.
+		fromVM := map[string]uint64{
+			"auth":         1,
+			"bank":         1,
+			"capability":   1,
+			"crisis":       1,
+			"distribution": 1,
+			"evidence":     1,
+			"gov":          1,
+			"mint":         1,
+			"params":       1,
+			"slashing":     1,
+			"staking":      1,
+			"upgrade":      1,
+			"vesting":      1,
+			"ibc":          1,
+			"genutil":      1,
+			"transfer":     1,
+			"chainmain":    1,
+			"nft":          1,
+			"supply":       1,
+		}
 
-	// upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
-	// if err != nil {
-	// 	panic(err)
-	// }
+		return app.mm.RunMigrations(ctx, app.configurator, fromVM)
+	})
 
-	// if upgradeInfo.Name == planName && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
-	// 	storeUpgrades := storetypes.StoreUpgrades{
-	// 		Added:   []string{nfttypes.StoreKey},
-	// 		Renamed: []storetypes.StoreRename{},
-	// 		Deleted: []string{},
-	// 	}
+	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
+	if err != nil {
+		panic(err)
+	}
 
-	// 	// configure store loader that checks if version == upgradeHeight and applies store upgrades
-	// 	app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
-	// }
+	if upgradeInfo.Name == planName && !app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+		storeUpgrades := storetypes.StoreUpgrades{
+			Added: []string{"authz", "feegrant"},
+		}
+
+		// configure store loader that checks if version == upgradeHeight and applies store upgrades
+		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
+	}
 
 	if loadLatest {
 		if err := app.LoadLatestVersion(); err != nil {

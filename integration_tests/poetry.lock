@@ -437,7 +437,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pystarport"
-version = "0.2.1"
+version = "0.2.2"
 description = "Spawn local devnets for cosmos-sdk chains"
 category = "main"
 optional = false
@@ -458,9 +458,9 @@ tomlkit = "^0.7.0"
 
 [package.source]
 type = "git"
-url = "https://github.com/tomtau/pystarport.git"
-reference = "fix/app-config"
-resolved_reference = "9582b3e5651f83414cbbbacb384d40b77c3807ca"
+url = "https://github.com/crypto-com/pystarport.git"
+reference = "main"
+resolved_reference = "721bd70c125d29e12b7d4ac7dd72904fa3eef049"
 
 [[package]]
 name = "pytest"
@@ -681,7 +681,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "edf1e3adeca8a90c20beee47450ae68932ca3186e7dd1ef36aeee5be586e6638"
+content-hash = "fd736ed50bcd1ee8052f47edcb712a7adcfe64b186d6d7bcdf4041ca9b56c257"
 
 [metadata.files]
 appdirs = [
