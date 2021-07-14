@@ -263,4 +263,5 @@ def test_staking_vesting_delegate(cluster):
         validator1_operator_address, "2basecro", signer1_address, 0, "0.025basecro"
     )
     assert rsp["code"] == 0, rsp["raw_log"]
+    wait_for_new_blocks(cluster, 2)
     assert cluster.staking_pool() == old_bonded + 2
