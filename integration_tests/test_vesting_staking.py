@@ -18,7 +18,8 @@ def cluster(worker_index, pytestconfig, tmp_path_factory):
     )
 
 
-# one more test for the vesting account bug -- that one can delegate twice with fee + redelegate
+# one more test for the vesting account bug
+# that one can delegate twice with fee + redelegate
 def test_staking_vesting_redelegate(cluster):
     community_addr = cluster.address("community")
     reserve_addr = cluster.address("reserve")
