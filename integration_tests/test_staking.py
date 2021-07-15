@@ -193,4 +193,3 @@ def test_min_self_delegation(cluster):
     assert (
         find_validator()["status"] == "BOND_STATUS_UNBONDING"
     ), "validator get removed"
-
