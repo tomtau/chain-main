@@ -709,12 +709,12 @@
     sha256 = "0cvgzjfbxhrada3h6lmcc9pvjjsbi3hz84cxj4xfjglddsm7virj"
 
 ["github.com/cosmos/ibc-go"]
-  sumVersion = "v1.0.0-rc0"
+  sumVersion = "v1.0.0-rc1"
   ["github.com/cosmos/ibc-go".fetch]
     type = "git"
     url = "https://github.com/cosmos/ibc-go"
-    rev = "99824784d5a6bdf14d9a7eab1a8c1125fa0e4e35"
-    sha256 = "0hw0js1rc4ywnakq0m634asii9bbbhv778v9waq75i5sha0lgb8l"
+    rev = "50e118e1381fe76e9a5c69234740ebd3e74902a0"
+    sha256 = "0dfzh1z16impj979c2xddjj1hfd8h1lb7cqidfgrhs564d26jpnr"
 
 ["github.com/cosmos/ledger-cosmos-go"]
   sumVersion = "v0.9.10-0.20200929055312-01e1d341de0f"
