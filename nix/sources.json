@@ -12,15 +12,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "ibc-rs": {
-        "branch": "master",
+        "branch": "adi/ibc-go-1-proto",
         "description": "IBC modules and relayer - Formal specifications and Rust implementation",
         "homepage": "",
         "owner": "informalsystems",
         "repo": "ibc-rs",
-        "rev": "24650a33692d169d7d196c0ee5c7c565f1564b27",
-        "sha256": "1y8klm276b7wgxdprh2a4q5cqy7325n9c5aw3wlyqn3d1wgqci8i",
+        "rev": "b9123478151aed717b0e7f21d27fd2a592d7eaaf",
+        "sha256": "0728cbq1bcnyglskikf978h9vpw00dahgvgk2vx6pzwc5ndgjdsd",
         "type": "tarball",
-        "url": "https://github.com/informalsystems/ibc-rs/archive/24650a33692d169d7d196c0ee5c7c565f1564b27.tar.gz",
+        "url": "https://github.com/informalsystems/ibc-rs/archive/b9123478151aed717b0e7f21d27fd2a592d7eaaf.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -29,10 +29,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "282473158cf8fafb736ed2a09f328be8b7ed2efa",
-        "sha256": "1nz2h6dmb6s5zcilb39l116y4dmp1c6w9n110g4dilm6v01linj2",
+        "rev": "1441fa74d213d7cc120d9d7d49e540c1fc59bc58",
+        "sha256": "152qb7ch0r4bidik33zd0a9wl0929zr0dqs5l5ksm7vh3assc7sc",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/282473158cf8fafb736ed2a09f328be8b7ed2efa.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/1441fa74d213d7cc120d9d7d49e540c1fc59bc58.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "relayer": {

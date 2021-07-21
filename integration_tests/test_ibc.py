@@ -108,6 +108,7 @@ def test_ibc(cluster):
                 "denom-trace",
                 denom_hash,
                 node=cluster["ibc-1"].node_rpc(0),
+                output="json",
             )
         )
         == {"denom_trace": {"path": f"transfer/{dst_channel}", "base_denom": "basecro"}}
@@ -120,6 +121,7 @@ def test_ibc(cluster):
             "balances",
             addr_1,
             node=cluster["ibc-1"].node_rpc(0),
+            output="json",
         )
     )["balances"] == [
         {"denom": "basecro", "amount": "10000000000"},
@@ -154,6 +156,7 @@ def test_ibc(cluster):
                 "balances",
                 cli.address("relayer"),
                 node=cli.node_rpc(0),
+                output="json",
             )
         )["balances"]
         assert [bal for bal in balances if int(bal["amount"]) > 0] == [
